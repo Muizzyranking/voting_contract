@@ -104,6 +104,39 @@
   (ok (map-get? candidates candidate-id))
 )
 
+(define-read-only (get-voter-info (voter principal))
+    (ok (map-get? voter-registry voter))
+)
+
+(define-read-only (is-registered (voter principal))
+    (default-to false (map-get? registered-voters voter))
+)
+
+(define-read-only (get-proposal (proposal-id uint))
+    (ok (map-get? proposals proposal-id))
+)
+
+(define-read-only (get-delegation-info (delegator principal))
+    (ok (map-get? delegations delegator))
+)
+
+(define-read-only (get-vote-record (voter principal) (proposal-id uint))
+    (ok (map-get? vote-records {voter: voter, proposal-id: proposal-id}))
+)
+
+(define-read-only (calculate-quorum (proposal-id uint))
+    (let (
+        (proposal (unwrap! (map-get? proposals proposal-id) ERR_INVALID_PROPOSAL))
+        (total-votes (+ (get vote-count-yes proposal) (get vote-count-no proposal)))
+        (required-votes (/ (* (var-get total-votes) QUORUM_PERCENTAGE) u100))
+    )
+    (ok {
+        total-votes: total-votes,
+        required-votes: required-votes,
+        has-quorum: (>= total-votes required-votes)
+    }))
+)
+
 ;; Public functions
 
 (define-public (add-candidate (id uint) (name (string-utf8 50)))
