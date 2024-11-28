@@ -35,6 +35,49 @@
   uint
   {name: (string-utf8 50), vote-count: uint}
 )
+(define-map registered-voters principal bool)
+(define-map voter-registry
+    principal
+    {
+        registered-at: uint,
+        voter-id: (string-utf8 50),
+        weight: uint  ;; For weighted voting if needed
+    }
+)
+(define-map proposals 
+    uint 
+    {
+        title: (string-utf8 100),
+        description: (string-utf8 500),
+        proposer: principal,
+        created-at: uint,
+        expires-at: uint,
+        status: (string-utf8 20),
+        required-stake: uint,
+        vote-count-yes: uint,
+        vote-count-no: uint,
+        executed: bool
+    }
+)
+
+(define-map vote-records
+    {voter: principal, proposal-id: uint}
+    {
+        vote: bool,  ;; true for yes, false for no
+        weight: uint,
+        timestamp: uint,
+        delegate: (optional principal)
+    }
+)
+
+(define-map delegations
+    principal  ;; delegator
+    {
+        delegate: principal,
+        expires-at: uint,
+        restrictions: (list 10 uint)  ;; proposal IDs that can't be delegated
+    }
+)
 
 ;; Read-only functions
 
