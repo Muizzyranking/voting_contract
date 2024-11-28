@@ -152,7 +152,10 @@
       (voter tx-sender)
     )
     (asserts! (var-get voting-open) ERR_VOTING_CLOSED)
+    (asserts! (is-registered voter) ERR_NOT_REGISTERED)
     (asserts! (is-none (map-get? votes voter)) ERR_ALREADY_VOTED)
+    (asserts! (>= block-height (var-get voting-start-time)) ERR_INVALID_TIME)
+    (asserts! (<= block-height (var-get voting-end-time)) ERR_INVALID_TIME)
     (match (map-get? candidates candidate-id)
       candidate
         (begin
