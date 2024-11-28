@@ -20,6 +20,14 @@
 ;; Define data variables
 (define-data-var voting-open bool true)
 (define-data-var total-votes uint u0)
+(define-data-var registration-open bool true)
+(define-data-var voting-start-time uint u0)
+(define-data-var voting-end-time uint u0)
+(define-data-var minimum-votes uint u1)
+(define-data-var emergency-stop bool false)
+(define-data-var proposal-count uint u0)
+(define-data-var quorum-votes uint u0)
+(define-data-var current-round uint u1)
 
 ;; Define data maps
 (define-map votes principal uint)
