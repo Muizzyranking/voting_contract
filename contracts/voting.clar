@@ -6,6 +6,16 @@
 (define-constant ERR_ALREADY_VOTED (err u101))
 (define-constant ERR_INVALID_VOTE (err u102))
 (define-constant ERR_VOTING_CLOSED (err u103))
+(define-constant ERR_REGISTRATION_CLOSED (err u104))
+(define-constant ERR_NOT_REGISTERED (err u105))
+(define-constant ERR_INVALID_TIME (err u106))
+(define-constant ERR_INVALID_PROPOSAL (err u107))
+(define-constant ERR_PROPOSAL_EXPIRED (err u108))
+(define-constant ERR_INSUFFICIENT_STAKE (err u109))
+(define-constant ERR_EMERGENCY_STOPPED (err u110))
+(define-constant ERR_INVALID_QUORUM (err u111))
+(define-constant MINIMUM_STAKE u1000000)
+(define-constant QUORUM_PERCENTAGE u51)
 
 ;; Define data variables
 (define-data-var voting-open bool true)
