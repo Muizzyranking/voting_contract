@@ -41,7 +41,7 @@
     {
         registered-at: uint,
         voter-id: (string-utf8 50),
-        weight: uint  ;; For weighted voting if needed
+        weight: uint
     }
 )
 (define-map proposals 
@@ -63,7 +63,7 @@
 (define-map vote-records
     {voter: principal, proposal-id: uint}
     {
-        vote: bool,  ;; true for yes, false for no
+        vote: bool,
         weight: uint,
         timestamp: uint,
         delegate: (optional principal)
@@ -75,12 +75,11 @@
     {
         delegate: principal,
         expires-at: uint,
-        restrictions: (list 10 uint)  ;; proposal IDs that can't be delegated
+        restrictions: (list 10 uint)
     }
 )
 
 ;; Read-only functions
-
 (define-read-only (get-vote-count (candidate-id uint))
   (match (map-get? candidates candidate-id)
     candidate (ok (get vote-count candidate))
